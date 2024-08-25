@@ -11,10 +11,15 @@ func evaluate(input string) (string, error) {
   }
 
   if isUnitConversion(input) {
-    return input, nil
+    res, err := evaluateUnitConversion(input)
+    if err != nil {
+      return "", err
+    }
+
+    return fmt.Sprintf("%.2f", res), nil
   }
 
-  return nil, fmt.Errorf("Invalid conversion") 
+  return "", fmt.Errorf("Invalid conversion") 
 }
 
 func isUnitConversion(input string) bool {
