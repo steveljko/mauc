@@ -1,7 +1,32 @@
 package main
 
-import "fmt"
+import (
+  "fmt"
+  "strings"
+
+  "github.com/chzyer/readline"
+)
 
 func main() {
-  fmt.Println("Hello World") 
+  rl, err := readline.New("> ")
+  if err != nil {
+    fmt.Println("Error creating readline ", err)
+    return
+  }
+  defer rl.Close()
+
+  for {
+    line, err := rl.Readline()
+    if err != nil {
+      fmt.Println(err)
+      break
+    }
+
+    line = strings.TrimSpace(line)
+    if line == "exit" {
+      break
+    }
+
+    fmt.Println(line)
+  }
 }
