@@ -1,5 +1,4 @@
 package main
-
 import (
   "fmt"
   "strings"
@@ -32,6 +31,6 @@ func main() {
       fmt.Println(err)
     } else {
       fmt.Println("=", res)
-  }
+    }
   }
 }

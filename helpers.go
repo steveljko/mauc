@@ -7,7 +7,18 @@ import (
   "strings"
 )
 
+var prevValue float64 
+
 func evaluate(input string) (string, error) {
+  if strings.HasPrefix(input, "_") {
+    if prevValue == 0 {
+      return "", fmt.Errorf("You don't have previously saved value")
+    }
+
+    val := fmt.Sprintf("%f", prevValue)
+    input = strings.ReplaceAll(input, "_", val)
+  }
+
   if isMathExpression(input) {
     return input, nil
   }
@@ -18,6 +29,8 @@ func evaluate(input string) (string, error) {
       return "", err
     }
 
+    prevValue = math.Round(res * 10) / 10
+
     return fmt.Sprintf("%.2f", res), nil
   }
 
@@ -26,6 +39,8 @@ func evaluate(input string) (string, error) {
     if err != nil {
       return "", err
     }
+
+    prevValue = math.Round(res * 10) / 10
 
     return fmt.Sprintf("%.0f", res), nil
   }
