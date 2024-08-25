@@ -27,6 +27,11 @@ func main() {
       break
     }
 
-    fmt.Println(line)
+    res, err := evaluate(line)
+    if err != nil {
+      fmt.Println(err)
+    }
+
+    fmt.Println("=", res)
   }
 }
