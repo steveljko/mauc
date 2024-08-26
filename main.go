@@ -1,4 +1,5 @@
 package main
+
 import (
   "fmt"
   "strings"
@@ -7,7 +8,12 @@ import (
 )
 
 func main() {
-  rl, err := readline.New("> ")
+  rl, err := readline.NewEx(&readline.Config {
+    Prompt: "> ",
+    HistoryFile: "/tmp/mauc.tmp",
+    AutoComplete: nil,
+    InterruptPrompt: "^C",
+  })
   if err != nil {
     fmt.Println("Error creating readline ", err)
     return
