@@ -20,7 +20,14 @@ func evaluate(input string) (string, error) {
   }
 
   if isMathExpression(input) {
-    return input, nil
+    res, err := evaluateMathExpression(input)
+    if err != nil {
+      return "", err
+    }
+
+    prevValue = math.Round(res * 10) / 10
+
+    return fmt.Sprintf("%.2f", res), nil
   }
 
   if isUnitConversion(input) {
