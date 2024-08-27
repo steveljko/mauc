@@ -45,9 +45,9 @@ func Evaluate(input string) (string, error) {
 			return "", err
 		}
 
-		prevValue = math.Round(res*10) / 10
+		prevValue = math.Round(res.Value*10) / 10
 
-		return fmt.Sprintf("%.2f", res), nil
+		return fmt.Sprintf("%.2f %s", res.Value, res.Unit), nil
 	}
 
 	if isRounding(input) {

@@ -2,6 +2,7 @@ package unit_conversion
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -48,28 +49,65 @@ var conversions = map[string]float64{
 	"lb_oz": 16,       // pounds to ounces
 }
 
-func Evaluate(input string) (float64, error) {
-	parts := strings.Split(input, " ")
+type Result struct {
+	Value float64
+	Unit  string
+}
 
-	if len(parts) == 4 {
-		value, err := strconv.ParseFloat(parts[0], 64)
-		if err != nil {
-			return 0, fmt.Errorf("Invalid conversion value")
-		}
+func Evaluate(input string) (Result, error) {
+	re := regexp.MustCompile(`(\d+)\s+([a-zA-Z\s]*?)\s+to\s+(.*\S)`)
+	parts := re.FindStringSubmatch(input)
 
-		from := strings.ToLower(parts[1])
-		to := strings.ToLower(parts[3])
-		key := from + "_" + to
-
-		factor, ok := conversions[key]
-		if !ok {
-			return 0, fmt.Errorf("This conversion is not allowed")
-		}
-
-		res := value * factor
-
-		return res, nil
+	value, err := strconv.ParseFloat(parts[1], 64)
+	if err != nil {
+		return Result{}, fmt.Errorf("Invalid conversion value")
 	}
 
-	return 0, fmt.Errorf("Invalid unit conversion")
+	from := alias(strings.ToLower(parts[2]))
+	to := alias(strings.ToLower(parts[3]))
+	key := from + "_" + to
+
+	factor, ok := conversions[key]
+	if !ok {
+		return Result{}, fmt.Errorf("This conversion is not allowed")
+	}
+
+	res := value * factor
+
+	return Result{Value: res, Unit: to}, nil
+}
+
+var unitMap = map[string]string{
+	"kilometers":          "km",
+	"kilometers per hour": "kmh",
+	"miles":               "mi",
+	"miles per hour":      "mph",
+	"meters":              "m",
+	"feet":                "ft",
+	"centimeters":         "cm",
+	"millimeters":         "mm",
+	"liters":              "l",
+	"milliliters":         "ml",
+	"gallons":             "gal",
+	"square feet":         "ft2",
+	"square meters":       "m2",
+	"acres":               "ac",
+	"hectares":            "ha",
+	"kilograms":           "kg",
+	"pounds":              "lb",
+	"grams":               "g",
+	"ounces":              "oz",
+}
+
+func alias(unit string) string {
+	// unit short names are not longer than 4 characters
+	if len(unit) >= 4 {
+		for fname, sname := range unitMap {
+			if fname == unit {
+				return sname
+			}
+		}
+	}
+
+	return unit
 }
