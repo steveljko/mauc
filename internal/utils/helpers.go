@@ -34,7 +34,7 @@ func Evaluate(input string) (string, error) {
 			return "", err
 		}
 
-		prevValue = math.Round(res*10) / 10
+		prevValue = res
 
 		return fmt.Sprintf("%.2f", res), nil
 	}
@@ -45,7 +45,7 @@ func Evaluate(input string) (string, error) {
 			return "", err
 		}
 
-		prevValue = math.Round(res.Value*10) / 10
+		prevValue = res.Value
 
 		return fmt.Sprintf("%.2f %s", res.Value, res.Unit), nil
 	}
@@ -56,7 +56,7 @@ func Evaluate(input string) (string, error) {
 			return "", err
 		}
 
-		prevValue = math.Round(res*10) / 10
+		prevValue = res
 
 		return fmt.Sprintf("%.0f", res), nil
 	}
