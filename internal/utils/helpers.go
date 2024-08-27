@@ -1,15 +1,18 @@
-package main
+package utils
 
 import (
 	"fmt"
 	"math"
 	"strconv"
 	"strings"
+
+	"mauc/internal/math_expression"
+	"mauc/internal/unit_conversion"
 )
 
 var prevValue float64
 
-func evaluate(input string) (string, error) {
+func Evaluate(input string) (string, error) {
 	if strings.HasPrefix(input, "_") {
 		if prevValue == 0 {
 			return "", fmt.Errorf("You don't have previously saved value")
@@ -26,7 +29,7 @@ func evaluate(input string) (string, error) {
 	}
 
 	if isMathExpression(input) {
-		res, err := evaluateMathExpression(input)
+		res, err := math_expression.Evaluate(input)
 		if err != nil {
 			return "", err
 		}
@@ -37,7 +40,7 @@ func evaluate(input string) (string, error) {
 	}
 
 	if isUnitConversion(input) {
-		res, err := evaluateUnitConversion(input)
+		res, err := unit_conversion.Evaluate(input)
 		if err != nil {
 			return "", err
 		}
