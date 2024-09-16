@@ -3,10 +3,12 @@ package utils
 import (
 	"fmt"
 	"math"
+	"regexp"
 	"strconv"
 	"strings"
 
 	"mauc/internal/math_expression"
+	"mauc/internal/percentage_expression"
 	"mauc/internal/unit_conversion"
 )
 
@@ -28,17 +30,6 @@ func Evaluate(input string) (string, error) {
 		input = strings.Replace(input, "_", val, 1)
 	}
 
-	if isMathExpression(input) {
-		res, err := math_expression.Evaluate(input)
-		if err != nil {
-			return "", err
-		}
-
-		prevValue = res
-
-		return fmt.Sprintf("%.2f", res), nil
-	}
-
 	if isUnitConversion(input) {
 		res, err := unit_conversion.Evaluate(input)
 		if err != nil {
@@ -48,6 +39,28 @@ func Evaluate(input string) (string, error) {
 		prevValue = res.Value
 
 		return fmt.Sprintf("%.2f %s", res.Value, res.Unit), nil
+	}
+
+	if isPercentageExpression(input) {
+		res, err := percentage_expression.Evaluate(input)
+		if err != nil {
+			return "", err
+		}
+
+		prevValue = res
+
+		return fmt.Sprintf("%.2f", res), nil
+	}
+
+	if isMathExpression(input) {
+		res, err := math_expression.Evaluate(input)
+		if err != nil {
+			return "", err
+		}
+
+		prevValue = res
+
+		return fmt.Sprintf("%.2f", res), nil
 	}
 
 	if isRounding(input) {
