@@ -65,11 +65,17 @@ func Evaluate(input string) (string, error) {
 }
 
 func isUnitConversion(input string) bool {
-	return strings.Contains(input, "to")
+	words := strings.Fields(input)
+	return len(words) >= 3 && strings.Contains(input, "to")
 }
 
 func isMathExpression(input string) bool {
 	return strings.ContainsAny(input, "+-*/^%")
+}
+
+func isPercentageExpression(input string) bool {
+	re := regexp.MustCompile(`^\s*([\d]+(?:\.\d+)?)%\s+(of|off)\s+([\d]+(?:\.\d+)?)\s*$`)
+	return re.MatchString(input)
 }
 
 func isRounding(input string) bool {
