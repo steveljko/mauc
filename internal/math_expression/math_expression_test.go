@@ -3,7 +3,6 @@ package math_expression
 import (
 	"testing"
 
-	"mauc/internal/math_expression"
 	"mauc/internal/tokenizer"
 )
 
@@ -101,7 +100,7 @@ func TestToPostfix(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result, err := math_expression.ToPostfix(test.input)
+		result, err := ToPostfix(test.input)
 		if test.hasError {
 			if err == nil {
 				t.Errorf("for input %v, expected an error but got nil", test.input)
@@ -141,7 +140,7 @@ func TestEvaluatePostfix(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		res, err := math_expression.EvaluatePostfix(test.postfix)
+		res, err := EvaluatePostfix(test.postfix)
 		if test.hasError {
 			if err == nil {
 				t.Errorf("expected error for postfix %q, got nil", test.postfix)
@@ -176,7 +175,7 @@ func TestEvaluateMathExpression(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		res, err := math_expression.Evaluate(test.input)
+		res, err := Evaluate(test.input)
 		if test.hasError {
 			if err == nil {
 				t.Errorf("for input %q, expected an error but got nil", test.input)

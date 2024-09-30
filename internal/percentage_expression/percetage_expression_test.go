@@ -1,10 +1,6 @@
 package percentage_expression
 
-import (
-	"testing"
-
-	"mauc/internal/percentage_expression"
-)
+import "testing"
 
 func TestEvaluatePercetageExpression(t *testing.T) {
 	tests := []struct {
@@ -19,7 +15,7 @@ func TestEvaluatePercetageExpression(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		res, err := percentage_expression.Evaluate(test.input)
+		res, err := Evaluate(test.input)
 
 		if test.hasError {
 			t.Errorf("for input %q, expected an error but got nil", test.input)

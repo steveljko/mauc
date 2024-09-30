@@ -1,45 +1,41 @@
 package tokenizer
 
-import (
-	"testing"
-
-	"mauc/internal/tokenizer"
-)
+import "testing"
 
 func TestTokenize(t *testing.T) {
 	tests := []struct {
 		input    string
-		expected []tokenizer.Token
+		expected []Token
 	}{
 		{
 			input: "3 + 5",
-			expected: []tokenizer.Token{
-				{Type: tokenizer.NUMBER, Value: "3"},
-				{Type: tokenizer.PLUS, Value: "+"},
-				{Type: tokenizer.NUMBER, Value: "5"},
-				{Type: tokenizer.EOF, Value: ""},
+			expected: []Token{
+				{Type: NUMBER, Value: "3"},
+				{Type: PLUS, Value: "+"},
+				{Type: NUMBER, Value: "5"},
+				{Type: EOF, Value: ""},
 			},
 		},
 		{
 			input: "-2 * (3 + 4)",
-			expected: []tokenizer.Token{
-				{Type: tokenizer.NUMBER, Value: "-2"},
-				{Type: tokenizer.MULTIPLY, Value: "*"},
-				{Type: tokenizer.LPAREN, Value: "("},
-				{Type: tokenizer.NUMBER, Value: "3"},
-				{Type: tokenizer.PLUS, Value: "+"},
-				{Type: tokenizer.NUMBER, Value: "4"},
-				{Type: tokenizer.RPAREN, Value: ")"},
-				{Type: tokenizer.EOF, Value: ""},
+			expected: []Token{
+				{Type: NUMBER, Value: "-2"},
+				{Type: MULTIPLY, Value: "*"},
+				{Type: LPAREN, Value: "("},
+				{Type: NUMBER, Value: "3"},
+				{Type: PLUS, Value: "+"},
+				{Type: NUMBER, Value: "4"},
+				{Type: RPAREN, Value: ")"},
+				{Type: EOF, Value: ""},
 			},
 		},
 		{
 			input: "10.5 / 2",
-			expected: []tokenizer.Token{
-				{Type: tokenizer.NUMBER, Value: "10.5"},
-				{Type: tokenizer.DIVIDE, Value: "/"},
-				{Type: tokenizer.NUMBER, Value: "2"},
-				{Type: tokenizer.EOF, Value: ""},
+			expected: []Token{
+				{Type: NUMBER, Value: "10.5"},
+				{Type: DIVIDE, Value: "/"},
+				{Type: NUMBER, Value: "2"},
+				{Type: EOF, Value: ""},
 			},
 		},
 		{
@@ -49,7 +45,7 @@ func TestTokenize(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		tokens, err := tokenizer.Tokenize(test.input)
+		tokens, err := Tokenize(test.input)
 		if test.expected == nil {
 			if err == nil {
 				t.Errorf("Expected an error for input %q, but got none", test.input)

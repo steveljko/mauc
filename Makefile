@@ -6,7 +6,7 @@ default: test build
 
 .PHONY: test
 test:
-	go test -v ./tests
+	go test -v ./internal/*
 
 .PHONY: build
 build:
