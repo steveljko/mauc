@@ -1,4 +1,4 @@
-package main
+package math_expression
 
 import (
 	"testing"

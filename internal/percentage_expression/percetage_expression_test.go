@@ -1,4 +1,4 @@
-package main
+package percentage_expression
 
 import (
 	"testing"

@@ -1,6 +1,6 @@
-# Mauc - All-in-One REPL (M)ath (a)nd (U)nit (C)onverter
+# mauc - All-in-One REPL (M)ath (a)nd (U)nit (C)onverter
 
-Mauc is a simple yet powerful REPL tool designed for performing a wide range of calculations.
+mauc is a simple yet powerful REPL tool designed for performing a wide range of calculations.
 
 ## Features
 
@@ -35,6 +35,7 @@ Add this section...
      > 10 km to mi 
      = 6.21 mi
      ```
+   - All supported units: 
 
 3. **Percentage Calculation**:
    - To calculate the percentage of a number:
