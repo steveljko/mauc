@@ -55,7 +55,7 @@ type Result struct {
 }
 
 func Evaluate(input string) (Result, error) {
-	re := regexp.MustCompile(`(\d+)\s+([a-zA-Z\s]*?)\s+to\s+(.*\S)`)
+	re := regexp.MustCompile(`(\d+)\s*(\w+)\s*to\s*(\w+)`)
 	parts := re.FindStringSubmatch(input)
 
 	value, err := strconv.ParseFloat(parts[1], 64)
